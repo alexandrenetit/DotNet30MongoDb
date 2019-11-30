@@ -1,8 +1,6 @@
-﻿#region snippet_BookServiceClass
-using BooksApi.Models;
+﻿using BooksApi.Models;
 using MongoDB.Driver;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace BooksApi.Services
 {
@@ -10,15 +8,13 @@ namespace BooksApi.Services
     {
         private readonly IMongoCollection<Book> _books;
 
-        #region snippet_BookServiceConstructor
         public BookService(IBookstoreDatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
+            var database = client.GetDatabase(settings.DataBaseName);
 
             _books = database.GetCollection<Book>(settings.BooksCollectionName);
         }
-        #endregion
 
         public List<Book> Get() =>
             _books.Find(book => true).ToList();
@@ -38,8 +34,7 @@ namespace BooksApi.Services
         public void Remove(Book bookIn) =>
             _books.DeleteOne(book => book.Id == bookIn.Id);
 
-        public void Remove(string id) => 
+        public void Remove(string id) =>
             _books.DeleteOne(book => book.Id == id);
     }
 }
-#endregion

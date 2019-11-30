@@ -20,7 +20,7 @@ namespace BooksApi.Controllers
         public ActionResult<List<Book>> Get() =>
             _bookService.Get();
 
-        [HttpGet("{id:length(24)}", Name = "GetBook")]
+        [HttpGet("id:length(24)", Name = "GetBook")]
         public ActionResult<Book> Get(string id)
         {
             var book = _bookService.Get(id);
@@ -34,6 +34,7 @@ namespace BooksApi.Controllers
         }
 
         [HttpPost]
+        [Route("Create")]
         public ActionResult<Book> Create(Book book)
         {
             _bookService.Create(book);
